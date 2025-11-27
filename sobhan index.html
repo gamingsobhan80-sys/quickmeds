@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QuickMeds — Local Pharmacy & Home Delivery</title>
+  <meta name="description" content="QuickMeds: Local pharmacy with fast home delivery, prescription upload, and monthly subscription packs." />
+  <style>
+    :root{--accent:#0b8a7f;--muted:#6b7280;--card:#ffffff;--bg:#f7f8fb}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
+    header{background:linear-gradient(90deg,var(--accent),#0b6b9a);color:white;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:48px;height:48px;border-radius:8px;background:white;display:grid;place-items:center;color:var(--accent);font-weight:700}
+    nav a{color:rgba(255,255,255,0.95);text-decoration:none;margin:0 8px;font-weight:600}
+    .container{max-width:1100px;margin:22px auto;padding:0 18px}
+    .hero{background:linear-gradient(180deg,white,transparent);padding:20px;border-radius:12px;display:flex;gap:20px;align-items:center}
+    .hero-text{flex:1}
+    h1{margin:0 0 8px 0;font-size:24px}
+    p.lead{margin:0;color:var(--muted)}
+    .cta{margin-top:12px}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:8px;text-decoration:none;display:inline-block}
+    .secondary{background:#fff;border:1px solid #e5e7eb;color:var(--accent)}
+    .layout{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:18px}
+    @media (max-width:900px){.layout{grid-template-columns:1fr}.hero{flex-direction:column}.nav-hidden{display:none}}
+
+    /* product cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .card h3{margin:6px 0;font-size:16px}
+    .price{font-weight:700;color:var(--accent)}
+    .card button{margin-top:8px;padding:8px 10px;border-radius:8px;border:none;background:#0b8a7f;color:white;cursor:pointer}
+
+    /* sidebar */
+    .sidebar{position:sticky;top:22px}
+    .cart{background:white;padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    .cart h4{margin:0 0 8px 0}
+    .cart-list{max-height:260px;overflow:auto;margin-bottom:10px}
+    .cart-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eef2f6}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* forms */
+    form{background:white;padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.04);margin-top:14px}
+    label{display:block;font-weight:600;margin:8px 0 4px}
+    input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf2}
+    .row{display:flex;gap:8px}
+    .row .col{flex:1}
+    footer{padding:18px;text-align:center;color:var(--muted);margin-top:26px}
+
+    /* tiny helpers */
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">QM</div>
+      <div>
+        <div style="font-weight:700">QuickMeds</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.9)">Local pharmacy • Fast home delivery</div>
+      </div>
+    </div>
+    <nav class="nav-hidden">
+      <a href="#products">Products</a>
+      <a href="#upload">Upload Rx</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Medicine delivery in your neighbourhood — prescription accepted</h1>
+        <p class="lead">Upload your prescription or order OTC & wellness products. Fast delivery, easy payments, and monthly refill packs.</p>
+        <div class="cta">
+          <a class="btn" href="#products">Shop Medicines</a>
+          <a class="btn secondary" href="#upload" style="margin-left:8px">Upload Prescription</a>
+        </div>
+      </div>
+      <div style="width:240px">
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='140'><rect width='100%' height='100%' rx='12' fill='%23eef6f5'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%230b8a7f' font-size='20' font-family='Arial'>Fast Delivery</text></svg>" alt="hero" style="width:100%;border-radius:10px;display:block"/>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section>
+        <h2 id="products">Available Products</h2>
+        <p class="muted">Sample catalogue — replace with your real inventory and prices.</p>
+
+        <div class="grid" id="productGrid">
+          <!-- product cards injected by JS -->
+        </div>
+
+        <form id="rxForm" enctype="multipart/form-data">
+          <h3 id="upload">Upload Prescription</h3>
+          <p class="small">Upload a clear photo or PDF. We will review and call you for confirmation.</p>
+          <label for="custName">Your name</label>
+          <input id="custName" type="text" placeholder="Full name" required />
+          <label for="custPhone">Phone number</label>
+          <input id="custPhone" type="tel" placeholder="Mobile number" required />
+          <label for="rxFile">Prescription file</label>
+          <input id="rxFile" type="file" accept="image/*,.pdf" required />
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button type="button" class="btn" onclick="submitRx()">Submit Prescription</button>
+            <button type="button" class="secondary" onclick="clearRx()" style="border:1px solid #e6edf2">Clear</button>
+          </div>
+          <div id="rxMsg" style="margin-top:8px" class="small muted"></div>
+        </form>
+
+      </section>
+
+      <aside class="sidebar">
+        <div class="cart" id="cartBox">
+          <h4>Your Cart</h4>
+          <div class="cart-list" id="cartList">
+            <div class="small muted">Cart is empty</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="small">Total</div>
+              <div id="cartTotal" style="font-weight:700">₹0.00</div>
+            </div>
+            <div>
+              <button class="btn" onclick="checkoutWhatsApp()">Order via WhatsApp</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="quickForm">
+          <h4>Quick Order</h4>
+          <label for="qName">Name</label>
+          <input id="qName" type="text" placeholder="Full name" required />
+          <label for="qPhone">Mobile</label>
+          <input id="qPhone" type="tel" placeholder="10 digit number" required />
+          <label for="qAddr">Delivery address</label>
+          <textarea id="qAddr" rows="3" placeholder="House, street, landmark" required></textarea>
+          <div style="margin-top:8px">
+            <button type="button" class="btn" onclick="submitQuickOrder()">Place Quick Order</button>
+          </div>
+          <div id="quickMsg" class="small muted" style="margin-top:8px"></div>
+        </form>
+
+      </aside>
+    </div>
+
+    <section style="margin-top:18px">
+      <h3>About QuickMeds</h3>
+      <p class="muted">A sample single-file demo website for local pharmacies who want to accept orders online and deliver to nearby customers. This static page includes a product catalog, cart, prescription upload, and WhatsApp order integration — everything you need to start collecting orders.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Made for local pharmacies • Modify inventory & prices in the HTML file</div>
+    <div style="margin-top:6px;font-size:13px">Questions? Reply and tell me what to change — I can customise this for you.</div>
+  </footer>
+
+  <script>
+    // Sample products (replace with your inventory)
+    const products = [
+      {id:1,name:'Paracetamol 500mg (10 tabs)',price:30},
+      {id:2,name:'Multivitamin Syrup 200ml',price:180},
+      {id:3,name:'Metformin 500mg (30 tabs)',price:150},
+      {id:4,name:'Glucometer Strip Pack (50)',price:450},
+      {id:5,name:'Cough Syrup 100ml',price:120},
+      {id:6,name:'Bandage / First Aid Kit',price:220}
+    ];
+
+    const productGrid = document.getElementById('productGrid');
+    const cartList = document.getElementById('cartList');
+    const cartTotal = document.getElementById('cartTotal');
+    let cart = [];
+
+    function formatINR(n){return '₹'+(n).toFixed(2)}
+
+    function renderProducts(){
+      productGrid.innerHTML = '';
+      products.forEach(p=>{
+        const el = document.createElement('div');el.className='card';
+        el.innerHTML = <h3>${p.name}</h3><div class='small muted'>In stock</div><div style='margin-top:8px'><div class='price'>${formatINR(p.price)}</div><button onclick='addToCart(${p.id})'>Add to cart</button></div>;
+        productGrid.appendChild(el);
+      })
+    }
+
+    function addToCart(id){
+      const prod = products.find(x=>x.id===id); if(!prod)return;
+      const found = cart.find(x=>x.id===id);
+      if(found) found.qty++;
+      else cart.push({id:prod.id,name:prod.name,price:prod.price,qty:1});
+      renderCart();
+    }
+
+    function renderCart(){
+      cartList.innerHTML='';
+      if(cart.length===0){cartList.innerHTML='<div class="small muted">Cart is empty</div>';cartTotal.textContent=formatINR(0);return}
+      let total=0;
+      cart.forEach(item=>{
+        const row = document.createElement('div');row.className='cart-item';
+        row.innerHTML = <div>${item.name} <div class='small muted'>x ${item.qty}</div></div><div>${formatINR(item.price*item.qty)}</div>;
+        cartList.appendChild(row);
+        total += item.price*item.qty;
+      });
+      cartTotal.textContent = formatINR(total);
+    }
+
+    function checkoutWhatsApp(){
+      if(cart.length===0){alert('Your cart is empty');return}
+      const name = document.getElementById('qName').value || 'Customer';
+      const phone = document.getElementById('qPhone').value || '';
+      const addr = document.getElementById('qAddr').value || '';
+      let text = New order from ${name}%0A;
+      if(phone) text += Phone: ${phone}%0A;
+      if(addr) text += Address: ${addr}%0A;
+      text += '\nOrder details:%0A';
+      cart.forEach(i=>{text += ${i.name} x${i.qty} - ₹${(i.price*i.qty).toFixed(2)}%0A});
+      text += %0ATotal: ${cartTotal.textContent};
+      // Replace the number below with your shop's WhatsApp number in international format without plus or zeros, e.g. 919876543210
+      const shopNumber = '919999999999';
+      const url = https://wa.me/${shopNumber}?text=${text};
+      window.open(url,'_blank');
+    }
+
+    function submitQuickOrder(){
+      const name = document.getElementById('qName');
+      const phone = document.getElementById('qPhone');
+      const addr = document.getElementById('qAddr');
+      if(!name.value || !phone.value || !addr.value){document.getElementById('quickMsg').textContent='Please fill all fields';return}
+      // For demo: just open WhatsApp with message
+      const text = Quick order from ${name.value}%0APhone: ${phone.value}%0AAddress: ${addr.value};
+      const shopNumber = '919999999999';
+      window.open(https://wa.me/${shopNumber}?text=${text},'_blank');
+    }
+
+    function submitRx(){
+      const name = document.getElementById('custName');
+      const phone = document.getElementById('custPhone');
+      const file = document.getElementById('rxFile');
+      if(!name.value || !phone.value || file.files.length===0){document.getElementById('rxMsg').textContent='Please complete the form and attach the prescription.';return}
+      document.getElementById('rxMsg').textContent='Prescription submitted. We will contact you shortly.';
+      // NOTE: In a real app you must upload the file to a server. This demo does not send files anywhere.
+    }
+
+    function clearRx(){document.getElementById('custName').value='';document.getElementById('custPhone').value='';document.getElementById('rxFile').value='';document.getElementById('rxMsg').textContent='';}
+
+    // initial render
+    renderProducts();renderCart();
+  </script>
+</body>
+</html>
