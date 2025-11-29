@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - QuickMeds</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #27ae60;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>QuickMeds Admin Panel</h1>
+    <div class="panel">
+        <h3>Admin Login</h3>
+
+        <input type="text" id="adminUser" placeholder="Admin Username">
+        <input type="password" id="adminPass" placeholder="Admin Password">
+
+        <button onclick="login()">Login</button>
+
+        <p id="msg" style="color:red; font-weight:bold;"></p>
+    </div>
+
+    <script>
+        function login() {
+            const user = document.getElementById("adminUser").value;
+            const pass = document.getElementById("adminPass").value;
+
+            // Change these values to your password
+            const realUser = "Sobhan";
+            const realPass = "admin123";
+
+            if (user === realUser && pass === realPass) {
+                window.location.href = "orders.html"; // Next admin page
+            } else {
+                document.getElementById("msg").innerText = "Incorrect username or password!";
+            }
+        }
+    </script>
+
+</body>
+</html>
